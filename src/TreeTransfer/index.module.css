@@ -32,7 +32,8 @@
   text-overflow: ellipsis;
 }
 
-.target .list .item:hover {
+.target .list .item:hover,
+.target .list .item.dragging {
   background-color: #e6f7ff;
   cursor: pointer;
 }

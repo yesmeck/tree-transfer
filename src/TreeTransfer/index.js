@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react';
 import { Tree } from 'antd';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import classnames from 'classnames';
 import styles from './index.module.css';
 
 const { TreeNode } = Tree;
@@ -76,7 +77,7 @@ const TreeTransfer = ({ dataSource, onChange, selectedKeys }) => {
                     <Draggable key={item.id} draggableId={item.id} index={index}>
                       {(provided, snapshot) => (
                         <div
-                          className={styles.item}
+                          className={classnames(styles.item, { [styles.dragging]: snapshot.isDragging })}
                           ref={provided.innerRef}
                           {...provided.draggableProps}
                           {...provided.dragHandleProps}

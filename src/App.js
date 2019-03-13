@@ -1,28 +1,25 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
+import TreeTransfer from './TreeTransfer';
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
-  }
-}
+const App = () => {
+  const [selectedKeys, setSelectedKeys] = useState([]);
+  const dataSource = [
+    {
+      name: '分类1',
+      children: [{ id: 1, name: '用例1' }, { id: 2, name: '用例2' }],
+    },
+    {
+      name: '分类2',
+      children: [{ id: 3, name: '用例3' }, { id: 4, name: '用例4' }],
+    },
+  ];
+
+  return (
+    <div className="App">
+      <TreeTransfer dataSource={dataSource} onChange={keys => setSelectedKeys(keys)} selectedKeys={selectedKeys} />
+    </div>
+  );
+};
 
 export default App;

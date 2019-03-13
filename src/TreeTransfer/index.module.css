@@ -1,0 +1,38 @@
+.container {
+  display: flex;
+  text-align: left;
+}
+
+.source {
+  position: relative;
+  display: inline-block;
+  width: 240px;
+  height: 400px;
+  vertical-align: middle;
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+  margin-right: 32px;
+}
+
+.target {
+  position: relative;
+  display: inline-block;
+  width: 240px;
+  height: 400px;
+  vertical-align: middle;
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+}
+
+.target .list .item {
+  min-height: 32px;
+  padding: 6px 12px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.target .list .item:hover {
+  background-color: #e6f7ff;
+  cursor: pointer;
+}

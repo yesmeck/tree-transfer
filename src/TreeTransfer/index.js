@@ -1,8 +1,8 @@
-import React, { useCallback } from 'react';
-import { Tree, Icon } from 'antd';
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-import classnames from 'classnames';
-import styles from './index.module.css';
+import React, { useCallback } from "react";
+import { Tree, Icon } from "antd";
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+import classnames from "classnames";
+import styles from "./index.module.css";
 
 const { TreeNode } = Tree;
 
@@ -10,7 +10,6 @@ const reorder = (list, startIndex, endIndex) => {
   const result = Array.from(list);
   const [removed] = result.splice(startIndex, 1);
   result.splice(endIndex, 0, removed);
-
   return result;
 };
 
@@ -21,7 +20,9 @@ const TreeTransfer = ({ dataSource, onChange, selectedKeys }) => {
   const handleCheck = useCallback(
     (_, info) => {
       const { checkedNodes } = info;
-      const checkedKeys = checkedNodes.filter(node => !node.props.children).map(node => node.key);
+      const checkedKeys = checkedNodes
+        .filter(node => !node.props.children)
+        .map(node => node.key);
       const newKeys = [];
       let existKeys = [];
       checkedKeys.forEach(key => {
@@ -31,11 +32,13 @@ const TreeTransfer = ({ dataSource, onChange, selectedKeys }) => {
           existKeys.push(key);
         }
       });
-      existKeys = existKeys.sort((a, b) => selectedKeys.indexOf(a) - selectedKeys.indexOf(b));
+      existKeys = existKeys.sort(
+        (a, b) => selectedKeys.indexOf(a) - selectedKeys.indexOf(b)
+      );
       console.log(1);
       onChange([...newKeys, ...existKeys]);
     },
-    [selectedKeys],
+    [selectedKeys]
   );
 
   const handleDragEnd = useCallback(
@@ -44,16 +47,23 @@ const TreeTransfer = ({ dataSource, onChange, selectedKeys }) => {
       if (!result.destination) {
         return;
       }
-      const next = reorder(selectedKeys, result.source.index, result.destination.index);
+      const next = reorder(
+        selectedKeys,
+        result.source.index,
+        result.destination.index
+      );
       onChange(next);
     },
-    [selectedKeys],
+    [selectedKeys]
   );
 
-  const handleRemove = useCallback((key) => () => {
-    const next = selectedKeys.filter(k => k !== key);
-    onChange(next);
-  }, [selectedKeys]);
+  const handleRemove = useCallback(
+    key => () => {
+      const next = selectedKeys.filter(k => k !== key);
+      onChange(next);
+    },
+    [selectedKeys]
+  );
 
   return (
     <div className={styles.container}>
@@ -72,20 +82,34 @@ const TreeTransfer = ({ dataSource, onChange, selectedKeys }) => {
         <DragDropContext onDragEnd={handleDragEnd}>
           <Droppable droppableId="droppable">
             {(provided, snapshot) => (
-              <div className={styles.list} {...provided.droppableProps} ref={provided.innerRef}>
+              <div
+                className={styles.list}
+                {...provided.droppableProps}
+                ref={provided.innerRef}
+              >
                 {selectedKeys.map((key, index) => {
                   const item = items.find(i => i.id.toString() === key);
                   return (
-                    <Draggable key={item.id} draggableId={item.id} index={index}>
+                    <Draggable
+                      key={item.id}
+                      draggableId={item.id}
+                      index={index}
+                    >
                       {(provided, snapshot) => (
                         <div
-                          className={classnames(styles.item, { [styles.dragging]: snapshot.isDragging })}
+                          className={classnames(styles.item, {
+                            [styles.dragging]: snapshot.isDragging
+                          })}
                           ref={provided.innerRef}
                           {...provided.draggableProps}
                           {...provided.dragHandleProps}
                         >
                           <span className={styles.text}>{item.name}</span>
-                          <Icon className={styles.removeIcon} type="close" onClick={handleRemove(key)} />
+                          <Icon
+                            className={styles.removeIcon}
+                            type="close"
+                            onClick={handleRemove(key)}
+                          />
                         </div>
                       )}
                     </Draggable>
